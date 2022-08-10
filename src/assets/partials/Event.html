@@ -1,0 +1,39 @@
+﻿<!--====================  breadcrumb area ====================-->
+<div class="breadcrumb-area bg-color--grey space-y--15">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-1">
+                <a href="javascript: history.back()" class="back-link"> <i class="fa fa-arrow-left">&nbsp;</i></a>
+            </div>
+            <div class="col-10">
+                <h1 class="page-title text-center">Sự kiện - Khuyến mại</h1>
+            </div>
+            <div class="col-1">
+            </div>
+        </div>
+    </div>
+</div>
+<!--====================  End of breadcrumb area  ====================-->
+<!--====================  Event area ====================-->
+<div class="list-event-wrapper">
+    <div class="list-event border-bottom--medium" ng-repeat="row in ListDatas">
+        <div class="list-event__image">
+            <a href="/Event/{{row.Id}}">
+                <div class="img-fluid d-flex bg-img" data-bg="{{UrlApp + row.UrlHinh}}"></div>
+            </a>
+        </div>
+        <div class="list-event__content text-justify pt-4">
+            <h3 class="title"><a href="/Event/{{row.Id}}">{{row.TieuDe}}</a></h3>
+            <div><i class="fa fa-clock-o"></i> {{row.NgayDang | date: 'HH:mm dd/MM/yyyy'}}</div>
+        </div>
+    </div>
+    <div ng-if="totalPage > iPageIndex">
+        <div class="loading-more">
+            <i class="fa fa-spinner"></i>
+            <a href="javascript:void(0)" ng-click="loadData(iPageIndex + 1)">
+                Tải thêm
+            </a>
+        </div>
+    </div>
+</div>
+<!--====================  End of event area  ====================-->

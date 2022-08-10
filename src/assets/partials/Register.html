@@ -1,0 +1,43 @@
+﻿<!-- auth page header -->
+<div class="auth-page-header space-pt--25 space-mb--30">
+    <div class="container">
+        <h3 class="auth-page-header__title">XIN CHÀO</h3>
+        <p class="auth-page-header__text">Bạn chưa có tải khoản? <br> Hãy đăng ký ngay một tài khoản.</p>
+    </div>
+</div>
+<!-- auth page body -->
+<div class="auth-page-body">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <!-- Auth form -->
+                <div class="auth-form">
+                    <form method="post" ng-submit="CreateAcc()">
+                        <div class="auth-form__single-field space-mb--30">
+                            <label for="name">Họ tên</label>
+                            <input type="text" id="hoten" ng-model="mUser.HoTen" placeholder="Nhập họ tên của bạn">
+                        </div>
+                        <div class="auth-form__single-field space-mb--30">
+                            <label for="name">Số điện thoại / Email</label>
+                            <input type="text" id="username" ng-model="mUser.UserName" ng-change="CheckUsername(mUser.UserName)" required placeholder="Nhập số điện thoại / email">
+                            <span class="help-block text-left text-danger" ng-show="IsErrorUserName && mUser.UserName">{{mssErrorUserName}}</span>
+                        </div>
+                        <div class="auth-form__single-field space-mb--30">
+                            <label for="password">Mật khẩu</label>
+                            <input type="password" id="pass" ng-model="mUser.Password" ng-change="CheckPass()" required placeholder="Nhập mật khẩu">
+                        </div>
+                        <div class="auth-form__single-field space-mb--30">
+                            <label for="password">Xác nhận mật khẩu</label>
+                            <input type="password" id="con-pass" ng-model="mUser.Password2" ng-change="CheckPass()" required placeholder="Nhập lại mật khẩu">
+                            <span class="help-block text-left text-danger" ng-show="IsErrorPass && mUser.Password2">Nhập lại mật khẩu không giống</span>
+                        </div>
+                        <div class="auth-form__single-field space-mb--30">
+                            <p class="auth-form__info-text">Bạn đã có một tài khoản? <a href="/Login">Đăng nhập ngay</a></p>
+                        </div>
+                        <button class="auth-form__button">Đăng ký</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

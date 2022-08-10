@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>SeaBook</title>
+
+  <base href="/" />
+
+  <meta name="color-scheme" content="light dark" />
+  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="msapplication-tap-highlight" content="no" />
+
+  <link rel="icon" type="image/png" href="assets/img/favicon.png" />
+
+  <!-- add to homescreen for ios -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <!-- FontAwesome CSS -->
+  <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+  <!-- Slick CSS -->
+  <link rel="stylesheet" href="assets/css/plugins/slick.min.css">
+  <!-- Animate CSS -->
+  <link rel="stylesheet" href="assets/css/plugins/cssanimation.min.css">
+  <!-- IonRange slider CSS -->
+  <link rel="stylesheet" href="assets/css/plugins/ion.rangeSlider.min.css">
+
+  <link href="assets/js/plugins/AngularJS-Toaster/toaster.css" rel="stylesheet" />
+  <link href="assets/js/plugins/ngprogress/ngProgress.css" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body ng-app="uiApp">
+  <toaster-container toaster-options="{'close-button': true, 'position-class': 'toast-bottom-full-width'}"></toaster-container>
+  <div class="body-wrapper space-pt--70 space-pb--120">
+    <!--====================  header area ====================-->
+    <header>
+        <div class="header-wrapper border-bottom">
+            <div class="container space-y--15">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <!-- header logo -->
+                        <div class="header-logo">
+                            <a href="/">
+                                <img src="assets/img/logo.png" class="img-fluid" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col d-flex justify-content-center">
+                        <!-- header search -->
+                        <div class="header-search">
+                            <form>
+                                <input type="text" id="header-search-input" ng-model="strSearch" ng-model-options="{updateOn : 'change blur'}" ng-change="TimKiemSanPham(strSearch)" placeholder="Bạn cần sản phẩm gì?">
+                                <img src="assets/img/icons/search.svg" class="injectable" alt="">
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <!-- header menu trigger -->
+                        <button class="header-menu-trigger" id="header-menu-trigger">
+                            <img src="assets/img/icons/menu.svg" class="injectable" alt="">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- search keywords -->
+        <div class="search-keyword-area space-xy--15 bg-color--grey2" id="search-keyword-box">
+            <div class="search-keyword-header space-mb--20">
+                <h4 class="search-keyword-header__title">Từ khoá nổi bật</h4>
+            </div>
+            <ul class="search-keywords">
+                <li><a href="Shop?s=but">Bút</a></li>
+                <li><a href="Shop?s=so">Sổ</a></li>
+                <li><a href="Shop?s=lich">Lịch</a></li>
+                <li><a href="Shop?s=but mau">Bút màu</a></li>
+                <li><a href="Shop?s=binh hoa">Bình hoa</a></li>
+                <li><a href="Shop?s=truyen tranh">Truyện tranh</a></li>
+            </ul>
+        </div>
+    </header>
+    <!--====================  End of header area  ====================-->
+    <!--====================  mobile menu overlay ====================-->
+    <div class="offcanvas-menu" id="offcanvas-menu">
+        <div class="profile-card text-center" ng-if="IsDaDangNhap()">
+            <div class="profile-card__image space-mb--10 px-4">
+                <img ng-if="user.Avatar" ng-src="/api/files?s={{user.Avatar}}" class="img-fluid" alt="">
+                <img ng-if="!user.Avatar" src="/assets/img/profile.jpg" class="img-fluid" alt="">
+            </div>
+            <div class="profile-card__content">
+                <p class="name">{{user.HoTen}} <span class="id">ID: {{user.UserName}}</span></p>
+            </div>
+        </div>
+        <div class="offcanvas-navigation-wrapper space-mt--40">
+            <ul class="offcanvas-navigation">
+                <li ng-if="!IsDaDangNhap()"><span class="icon"><i class="fa fa-sign-in"></i></span><a ng href="/Login">Đăng nhập</a></li>
+                <li><span class="icon"><i class="fa fa-info-circle"></i></span><a href="/Contact">Giới thiệu</a></li>
+                <li><span class="icon"><i class="fa fa-tags"></i></span><a href="/Event">Sự kiện - Khuyến mại</a></li>
+                <li><span class="icon"><i class="fa fa-bell-o"></i></span><a href="/">Thông báo</a></li>
+                <li><span class="icon"><img src="assets/img/icons/wishlist.svg" class="injectable" alt=""></span><span class="label">{{YeuThich.SoSanPham}}</span><a href="/Wishlist">Yêu thích</a></li>
+                <li><span class="icon"><img src="assets/img/icons/cart-three.svg" class="injectable" alt=""></span><span class="label">{{GioHang.SoSanPham}}</span><a href="/Cart">Giỏ hàng</a></li>
+                <li><span class="icon"><i class="fa fa-address-book-o"></i></span><a href="/Profile">Thông tin tài khoản</a></li>
+                <li ng-if="IsDaDangNhap()"><span class="icon"><i class="fa fa-sign-out"></i></span><a ng href="#" ng-click="logout()">Đăng xuất</a></li>
+            </ul>
+        </div>
+    </div>
+    <!--====================  End of mobile menu overlay  ====================-->
+    <div ui-view=""></div>
+
+    <!--====================  footer area ====================-->
+    <footer>
+        <div class="footer-nav-wrapper">
+            <a href="/" class="footer-nav-single" ng-class="{'active': $state.current.name == 'Home'}">
+                <div class="menu-wrapper">
+                    <img src="assets/img/icons/home.svg" class="injectable" alt="">
+                    <span>Trang chủ</span>
+                </div>
+            </a>
+            <a href="/Shop" class="footer-nav-single" ng-class="{'active': $state.current.name == 'Shop'}">
+                <div class="menu-wrapper">
+                    <img src="assets/img/icons/shop.svg" class="injectable" alt="">
+                    <span>Shop</span>
+                </div>
+            </a>
+            <a href="/Cart" class="footer-nav-single" ng-class="{'active': $state.current.name == 'Cart'}">
+                <div class="menu-wrapper">
+                    <img src="assets/img/icons/cart.svg" class="injectable" alt="">
+                    <span ng-show="GioHang.SoSanPham" class="label">{{GioHang.SoSanPham}}</span>
+                    <span>Giỏ hàng</span>
+                </div>
+            </a>
+            <a href="/Event" class="footer-nav-single" ng-class="{'active': $state.current.name == 'Event'}">
+                <div class="menu-wrapper">
+                    <i class="fa fa-tags"></i>
+                    <span>Khuyến mại</span>
+                </div>
+            </a>
+            <a href="/Profile" class="footer-nav-single" ng-class="{'active': $state.current.name == 'Profile'}">
+                <div class="menu-wrapper">
+                    <img src="assets/img/icons/profile.svg" class="injectable" alt="">
+                    <span>Tài khoản</span>
+                </div>
+            </a>
+        </div>
+    </footer>
+    <!--====================  End of footer area  ====================-->
+</div>
+<div id="loader"></div>
+<div id="loader2" style="display: block;" ">
+    <img src="assets/img/logo.png" class="img-fluid" alt="">
+</div>
+<div id="loader-progress" style="display: block;">
+    <div class="spinner-icon"></div>
+    <div class="spinner-icon-2"></div>
+</div>
+<app-root></app-root>
+<script>
+    var _version = '20220808';
+</script>
+<!-- Modernizer JS -->
+<script src="assets/js/modernizr-2.8.3.min.js"></script>
+<!-- jQuery JS -->
+<script src="assets/js/jquery.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="assets/js/bootstrap.min.js"></script>
+<!-- IonRanger JS -->
+<script src="assets/js/plugins/ion.rangeSlider.min.js"></script>
+<!-- SVG inject JS -->
+<script src="assets/js/plugins/svg-inject.min.js"></script>
+<!-- Slick slider JS -->
+<script src="assets/js/plugins/slick.min.js"></script>
+<!-- Plugins JS (Please remove the comment from below plugins.min.js for better website load performance and remove plugin js files from above) -->
+<!--
+  <script src="assets/js/plugins/plugins.min.js"></script>
+-->
+<!-- Main JS -->
+<script src="assets/js/main.js"></script>
+
+<script type="text/javascript" src="assets/js/plugins/moment/moment.js"></script>
+<script type="text/javascript" src="assets/js/plugins/angular/angular.js"></script>
+<script type="text/javascript" src="assets/js/plugins/angular-sanitize/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="assets/js/plugins/angular-ui-router/angular-ui-router.js"></script>
+<script type="text/javascript" src="assets/js/plugins/ngprogress/build/ngprogress.js"></script>
+<script type="text/javascript" src="assets/js/plugins/AngularJS-Toaster/toaster.js"></script>
+<script type="text/javascript" src="assets/js/plugins/angular-touch/angular-touch.js"></script>
+<script type="text/javascript" src="assets/js/plugins/moment/moment.js"></script>
+<script type="text/javascript" src="assets/js/plugins/underscore/underscore.js"></script>
+<script type="text/javascript" src="assets/js/app/site.js?v=20220808"></script>
+<script src="assets/js/app/app.module.js?v=20220808"></script>
+<script src="assets/js/app/app.directives.js?v=20220808"></script>
+<script src="assets/js/app/app.controller.js?v=20220808"></script>
+</body>
+
+</html>

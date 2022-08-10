@@ -1,0 +1,8 @@
+{
+  "name": "SeaBook",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "0ea2308d"
+}

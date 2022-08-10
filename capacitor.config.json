@@ -1,0 +1,6 @@
+{
+	"appId": "com.program.Seastore",
+	"appName": "SeaBook",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
